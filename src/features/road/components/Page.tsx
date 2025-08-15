@@ -1,12 +1,11 @@
-import { MenuItem, Stack } from '@mui/material'
-import { SelectList } from '@/components'
+import { Button, MenuItem, Stack } from '@mui/material'
+import { Footer, SelectList } from '@/components'
 import { useRoad } from '../hooks'
-import { adminArray, roadArray } from '../types'
+import { adminArray } from '../utils'
+import { ResultBox } from './ResultBox'
 
 export const Page = () => {
-  const {
-    form: { control }
-  } = useRoad()
+  const { control, roadArray, currentPermission, submit } = useRoad()
 
   return (
     <Stack spacing={2}>
@@ -17,9 +16,9 @@ export const Page = () => {
         size="small"
         sx={{ width: '30ch' }}
       >
-        {adminArray.map(([key, value]) => (
-          <MenuItem key={key} value={key}>
-            {value}
+        {adminArray.map(({ type, label }) => (
+          <MenuItem key={type} value={type}>
+            {label}
           </MenuItem>
         ))}
       </SelectList>
@@ -31,9 +30,9 @@ export const Page = () => {
         size="small"
         sx={{ width: '30ch' }}
       >
-        {roadArray.map(([key, value]) => (
-          <MenuItem key={key} value={key}>
-            {value}
+        {roadArray.map(({ type, label }) => (
+          <MenuItem key={type} value={type}>
+            {label}
           </MenuItem>
         ))}
       </SelectList>
@@ -44,12 +43,18 @@ export const Page = () => {
         size="small"
         sx={{ width: '30ch' }}
       >
-        {adminArray.map(([key, value]) => (
-          <MenuItem key={key} value={key}>
-            {value}
+        {adminArray.map(({ type, label }) => (
+          <MenuItem key={type} value={type}>
+            {label}
           </MenuItem>
         ))}
       </SelectList>
+      <ResultBox currentPermission={currentPermission} />
+      <Footer>
+        <Button variant="contained" color="primary" onClick={submit}>
+          登録
+        </Button>
+      </Footer>
     </Stack>
   )
 }
