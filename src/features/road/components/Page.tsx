@@ -1,11 +1,20 @@
 import { Button, MenuItem, Stack } from '@mui/material'
 import { Footer, SelectList } from '@/components'
-import { useRoad } from '../hooks'
-import { adminArray } from '../utils'
+import { roadPermissionMatrix, useRoad } from '../hooks'
+import { AdminType, RoadType } from '../types'
 import { ResultBox } from './ResultBox'
 
 export const Page = () => {
-  const { control, roadArray, currentPermission, submit } = useRoad()
+  const {
+    control,
+    adminList,
+    roadList,
+    currentPermission,
+    userChanged,
+    adminChanged,
+    roadChanged,
+    submit
+  } = useRoad(roadPermissionMatrix)
 
   return (
     <Stack spacing={2}>
@@ -14,9 +23,10 @@ export const Page = () => {
         label="ユーザー"
         control={control}
         size="small"
+        onChange={e => userChanged(e.target.value as unknown as AdminType)}
         sx={{ width: '30ch' }}
       >
-        {adminArray.map(({ type, label }) => (
+        {adminList.map(({ type, label }) => (
           <MenuItem key={type} value={type}>
             {label}
           </MenuItem>
@@ -29,8 +39,9 @@ export const Page = () => {
         control={control}
         size="small"
         sx={{ width: '30ch' }}
+        onChange={e => roadChanged(e.target.value as unknown as RoadType)}
       >
-        {roadArray.map(({ type, label }) => (
+        {roadList.map(({ type, label }) => (
           <MenuItem key={type} value={type}>
             {label}
           </MenuItem>
@@ -42,8 +53,9 @@ export const Page = () => {
         control={control}
         size="small"
         sx={{ width: '30ch' }}
+        onChange={e => adminChanged(e.target.value as unknown as AdminType)}
       >
-        {adminArray.map(({ type, label }) => (
+        {adminList.map(({ type, label }) => (
           <MenuItem key={type} value={type}>
             {label}
           </MenuItem>
