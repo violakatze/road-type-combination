@@ -31,11 +31,7 @@ export const useRoad = (roadPermissionMatrix: types.RoadPermissionListItemType[]
   const userChanged = (adminType: types.AdminType) => {
     setValue('user', adminType)
 
-    // 道路種別をデフォルト値に変更
-    const defaultRoad = getDefaultRoadType(roadPermissionMatrix, adminType)
-    setValue('road', defaultRoad)
-
-    // 道路管理者区分の変更をトリガー
+    // 道路管理者区分をデフォルトに戻す
     adminChanged(adminType)
   }
 
@@ -45,20 +41,13 @@ export const useRoad = (roadPermissionMatrix: types.RoadPermissionListItemType[]
   const adminChanged = (adminType: types.AdminType) => {
     setValue('admin', adminType)
 
-    // 選択されている道路種別を退避
-    const currentRoad = getValues('road')
-
     // 選択された道路管理者区分に応じて道路種別リストを絞り込み
     const filteredRoadList = getRoadList(roadPermissionMatrix, adminType)
     setRoadList(filteredRoadList)
 
-    // 選択されている道路種別が更新後のリストで指定可能でない場合はデフォルトの道路種別に変更する
-    if (!isOk(roadPermissionMatrix, adminType, currentRoad)) {
-      const defaultRoad = getDefaultRoadType(roadPermissionMatrix, adminType)
-      setValue('road', defaultRoad)
-    }
-
-    updateCurrentPermission()
+    // 道路種別をデフォルトに戻す
+    const defaultRoad = getDefaultRoadType(roadPermissionMatrix, adminType)
+    roadChanged(defaultRoad)
   }
 
   /**
@@ -84,7 +73,8 @@ export const useRoad = (roadPermissionMatrix: types.RoadPermissionListItemType[]
     userChanged,
     adminChanged,
     roadChanged,
-    submit
+    submit,
+    getValues // UnitTest用に公開
   }
 }
 
@@ -138,24 +128,6 @@ const getDefaultRoadType = (
   }
 
   return defaultRoad.road
-}
-
-/**
- * 道路種別と管理者区分の組み合わせが指定可能かどうかを判定する
- * @param roadPermissionMatrix 道路種別の指定可否マトリックス
- * @param target 管理者区分
- * @param source 道路種別
- * @returns 指定可能ならtrue、そうでなければfalse
- */
-const isOk = (
-  roadPermissionMatrix: types.RoadPermissionListItemType[],
-  target: types.AdminType,
-  source: types.RoadType
-): boolean => {
-  const permissions = getPermissions(roadPermissionMatrix, target)
-
-  // 指定可能な組み合わせか確認(アラート対象はここでは許容しない)
-  return permissions.some(p => p.road === source && p.permission === types.permission.Ok)
 }
 
 /**

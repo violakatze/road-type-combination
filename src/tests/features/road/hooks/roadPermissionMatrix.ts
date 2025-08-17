@@ -21,7 +21,7 @@ export const roadPermissionMatrixForTest: RoadPermissionListItemType[] = [
     permissions: [
       { road: road.Expressway, permission: permission.None },
       { road: road.NationalHighway, permission: permission.Ok },
-      { road: road.CityHighway, permission: permission.Ok },
+      { road: road.CityHighway, permission: permission.Alert },
       { road: road.MajorLocalRoad, permission: permission.Ok },
       { road: road.PrefecturalRoad, permission: permission.Ok },
       { road: road.DesignatedCityRoad, permission: permission.Alert },
@@ -33,8 +33,8 @@ export const roadPermissionMatrixForTest: RoadPermissionListItemType[] = [
     admin: admin.DesignatedCity,
     permissions: [
       { road: road.Expressway, permission: permission.None },
-      { road: road.NationalHighway, permission: permission.Ok },
-      { road: road.CityHighway, permission: permission.Alert },
+      { road: road.NationalHighway, permission: permission.Alert },
+      { road: road.CityHighway, permission: permission.Ok },
       { road: road.MajorLocalRoad, permission: permission.Ok },
       { road: road.PrefecturalRoad, permission: permission.Ok },
       { road: road.DesignatedCityRoad, permission: permission.Ok },
@@ -48,7 +48,7 @@ export const roadPermissionMatrixForTest: RoadPermissionListItemType[] = [
       { road: road.Expressway, permission: permission.None },
       { road: road.NationalHighway, permission: permission.Alert },
       { road: road.CityHighway, permission: permission.None },
-      { road: road.MajorLocalRoad, permission: permission.Alert },
+      { road: road.MajorLocalRoad, permission: permission.Ok },
       { road: road.PrefecturalRoad, permission: permission.Alert },
       { road: road.DesignatedCityRoad, permission: permission.Alert },
       { road: road.City, permission: permission.Ok }
